@@ -1,0 +1,13 @@
+nhap 1 chuoi trong chuoi
+char ten[1000];
+scanf("%s", ten);
+
+fgets(ten,  1000, stdin); tự ý them dâu xuông dòng
+ten[strlen(ten) - 1] = '\0';
+
+!!!!!!!
+in ra
+
+printf("%s");
+puts(ten); tự thêm 1 dấu xuống dòng
+fputs(ten , stdout); khong tự thêm dấu xuống dòng.
