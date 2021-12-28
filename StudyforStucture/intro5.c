@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct 
 {
@@ -10,7 +11,7 @@ typedef struct
     int salary;
     float rating;
 
-}Employee;
+} Employee;
 
 void print_employee(Employee e)
 {
@@ -23,34 +24,40 @@ void read_file(const char file_path[])
     FILE* file = fopen(file_path, "r");
 
     int n;
-    fscanf(file, "%d", &n);
-    fgetc(file); // sau fscanf vaf truoc fgets
-
+    fscanf(file, "%d", &n);    
     //printf("%d", n);
-
-    //getchar(); doc tu ban phim chu khong tu file
+    // fgetc(file); // hoac có thể thây 2 dòng 28, 29 -> fgets(line, 200, file);
+    // fgetc(file);
+    
+    Employee * employee_list = calloc(n, sizeof(Employee));
 
     char line[200];
+    fgets(line, 200, file);
 
-    for (int i = 0; i <= n; i++)
+    for (int i = 1; i <= n; i++)
     {
         fgets(line, 200, file);
 
-        // if(line[strlen(line) - 1] == '\n'){
-        //     line[strlen(line) - 1] == '\0';
-        // }
+        if(line[strlen(line) - 1] == 10 || line[strlen(line) - 1] == 13) {
+            line[strlen(line) - 1] = '\0';
+        }
+        if(line[strlen(line) - 1] == 10 || line[strlen(line) - 1] == 13) {
+            line[strlen(line) - 1] = '\0';
+        }   
+        printf("%s\n", line);
 
-        printf("%s", line);
-    }
-    
-    
+        
+        
+    } //end for
 
     fclose(file);
 }
 
 int main()
 {
-    read_file("input.txt");
+    read_file("input_1.txt");
+    //atoi vs atof 
+    
 
-    return 0; 
+    return 0;
 }

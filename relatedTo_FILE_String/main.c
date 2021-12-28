@@ -31,7 +31,6 @@ int write_array(int a[], const char path[], int n) /// in ra tep tin output tu m
     if(f == NULL) return 0;
 
     
-
     for (int i = 0; i < n; i++)
     {   
         if (i == n - 1)

@@ -26,7 +26,7 @@ int main()
     fprintf(f, "%s", input);
 
 
-
+    
 
     fclose(f);
     return 0;

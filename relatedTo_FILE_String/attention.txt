@@ -11,3 +11,8 @@ in ra
 printf("%s");
 puts(ten); tự thêm 1 dấu xuống dòng
 fputs(ten , stdout); khong tự thêm dấu xuống dòng.
+
+
+//printf("%d", n);
+    // fgetc(file); // hoac có thể thây 2 dòng 28, 29 -> fgets(line, 200, file);
+    // fgetc(file);
