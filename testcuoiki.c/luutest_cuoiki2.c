@@ -3,6 +3,13 @@
 #include <string.h>
 #include <stdlib.h>
 
+typedef struct
+{
+    int day;
+    int month;
+    int year;
+} date;
+
 typedef struct 
 {
     int studentID;
@@ -12,9 +19,11 @@ typedef struct
     char dateOfBirth[100];
     int classname;
     char country[100];
+    int day;
+    int month;
+    int year;
 
 } dssv;
-
 
 
 int demSodong(const char file_path[])
@@ -80,7 +89,7 @@ dssv* read_file(const char file_path[], int n)
             if (index == 4)
             {
                 strcpy(student_list[i].dateOfBirth, token);   
-            
+                //
             }
             if (index == 5)
             {
@@ -95,11 +104,46 @@ dssv* read_file(const char file_path[], int n)
             index++;
         }
 
-    } 
+    }
     fclose(file);
 
     return student_list;
 }
+
+///
+date* bring_date(dssv* list_student, int n)
+{
+    date* date_sts = calloc(n, sizeof(date));
+
+    for(int i = 0; i <= n -2; i++)
+    {   
+        char * token = strtok(list_student[i].dateOfBirth, "/");
+        int j = 0;
+        while( token != NULL ) {
+            //printf( " %s ", token );
+            if (j == 0)
+            {
+                date_sts[i].day = atoi(token);
+            }
+            if (j == 1)
+            {
+                date_sts[i].month = atoi(token);
+            }
+            if (j == 2)
+            {
+                date_sts[i].year = atoi(token);
+            }
+            token = strtok(NULL, "/");
+            j++;
+        }
+        
+        //printf("%s\n", list_student[i].dateOfBirth);
+    }
+    return date_sts;
+}
+////
+
+
 
 //y1
 void print_sts_list(dssv* my_sts, int n, int x, const char path[])
@@ -153,6 +197,8 @@ void count_Female(dssv* my_sts, int n, const char path[])
 
     fclose(file);
 }
+
+
 
 //y4
 void sort_tang(dssv* my_sts, int n, const char path[])
@@ -230,8 +276,6 @@ void sort_giam(dssv* my_sts, int n, const char path[])
         //print_student(my_sts[i], x);
 
         fprintf(file,"%d %s %s %s %s %d %s\n",my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
-        
-
     }
 
     fclose(file);
@@ -239,13 +283,21 @@ void sort_giam(dssv* my_sts, int n, const char path[])
 
 int main()
 {   
-    int x;
+    
     int n = demSodong("dssv.csv");
     dssv* list_student = read_file("dssv.csv", n);
+    date* list_date = bring_date(list_student, n);
 
-    printf("%d", n);
-    print_sts_list(list_student, n, 5203001, "result.csv");
+    //printf("%d", n);
+    //print_sts_list(list_student, n, 5203001, "result.csv");
+
     
+
+    for(int i = 0; i <= n -2; i++)
+    {   
+        printf("%d-\t%d %d %d\n", i,list_date[i].day, list_date[i].month, list_date[i].year);
+    }
+
     //count_male(list_student, n,  "result.csv");
 
     //count_Female(list_student, n,  "result.csv");
