@@ -143,8 +143,6 @@ date* bring_date(dssv* list_student, int n)
 }
 ////
 
-
-
 //y1
 void print_sts_list(dssv* my_sts, int n, int x, const char path[])
 {   
@@ -198,32 +196,66 @@ void count_Female(dssv* my_sts, int n, const char path[])
     fclose(file);
 }
 
-
-
 //y4
-void sort_tang(dssv* my_sts, int n, const char path[])
+void sort_tang(dssv* my_sts, int n, const char path[], date* listdate)
 {
     FILE* file = fopen(path, "w");
     dssv temp;
-
+    date temp_date;
     for(int i = 0; i <= n - 3; i++)
     {
-        for(int j = i + 1; j <= n -2; j++)
+        for(int j = i + 1; j <= n - 2; j++)
         {
             int cmp = strcmp(my_sts[i].firstName, my_sts[j].firstName);
+            //printf("%d %d", listdate[i].year,  listdate[j].year);
             if(cmp == 0)
-            {
-                if(strcmp(my_sts[i].dateOfBirth, my_sts[j].dateOfBirth) > 0)
-                {
+            {   
+                if(listdate[i].year  < listdate[j].year)
+                {   
+                    //doi ben dan sach
                     temp = my_sts[i];
                     my_sts[i] = my_sts[j];
                     my_sts[j] = temp;
-                }
+                    // doi ben dia chi
+                    temp_date = listdate[i];
+                    listdate[i] = listdate[j];
+                    listdate[j] = temp_date;
+                    
+                } else if (listdate[i].year  == listdate[j].year)
+                    {   
+                        if(listdate[i].month  > listdate[j].month)
+                        {
+                            temp = my_sts[i];
+                            my_sts[i] = my_sts[j];
+                            my_sts[j] = temp; 
+
+                            temp_date = listdate[i];
+                            listdate[i] = listdate[j];
+                            listdate[j] = temp_date;
+                        } else if(listdate[i].month  == listdate[j].month)
+                            {
+                                if(listdate[i].day  > listdate[j].day)
+                                {
+                                    temp = my_sts[i];
+                                    my_sts[i] = my_sts[j];
+                                    my_sts[j] = temp; 
+
+                                    temp_date = listdate[i];
+                                    listdate[i] = listdate[j];
+                                    listdate[j] = temp_date;
+                                }
+                            }
+                            
+                    }
             } else if (cmp > 0)
                 {
                     temp = my_sts[i];
                     my_sts[i] = my_sts[j];
                     my_sts[j] = temp;
+
+                    temp_date = listdate[i];
+                    listdate[i] = listdate[j];
+                    listdate[j] = temp_date;
                 }
             
         }
@@ -234,7 +266,83 @@ void sort_tang(dssv* my_sts, int n, const char path[])
     {   
         //print_student(my_sts[i], x);
 
-        fprintf(file,"%d %s %s %s %s %d %s\n",my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
+        fprintf(file,"%d -  %d %s %s %s %s %d %s\n", i, my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
+        
+
+    }
+
+    fclose(file);
+}
+//giam
+void sort_giam(dssv* my_sts, int n, const char path[], date* listdate)
+{
+    FILE* file = fopen(path, "w");
+    dssv temp;
+    date temp_date;
+    for(int i = 0; i <= n - 3; i++)
+    {
+        for(int j = i + 1; j <= n - 2; j++)
+        {
+            int cmp = strcmp(my_sts[i].firstName, my_sts[j].firstName);
+            //printf("%d %d", listdate[i].year,  listdate[j].year);
+            if(cmp == 0)
+            {   
+                if(listdate[i].year  > listdate[j].year)
+                {   
+                    //doi ben dan sach
+                    temp = my_sts[i];
+                    my_sts[i] = my_sts[j];
+                    my_sts[j] = temp;
+                    // doi ben dia chi
+                    temp_date = listdate[i];
+                    listdate[i] = listdate[j];
+                    listdate[j] = temp_date;
+                    
+                } else if (listdate[i].year  == listdate[j].year)
+                    {   
+                        if(listdate[i].month  < listdate[j].month)
+                        {
+                            temp = my_sts[i];
+                            my_sts[i] = my_sts[j];
+                            my_sts[j] = temp; 
+
+                            temp_date = listdate[i];
+                            listdate[i] = listdate[j];
+                            listdate[j] = temp_date;
+                        } else if(listdate[i].month  == listdate[j].month)
+                            {
+                                if(listdate[i].day  < listdate[j].day)
+                                {
+                                    temp = my_sts[i];
+                                    my_sts[i] = my_sts[j];
+                                    my_sts[j] = temp; 
+
+                                    temp_date = listdate[i];
+                                    listdate[i] = listdate[j];
+                                    listdate[j] = temp_date;
+                                }
+                            }
+                    }
+            } else if (cmp < 0)
+                {
+                    temp = my_sts[i];
+                    my_sts[i] = my_sts[j];
+                    my_sts[j] = temp;
+
+                    temp_date = listdate[i];
+                    listdate[i] = listdate[j];
+                    listdate[j] = temp_date;
+                }
+            
+        }
+
+    }
+
+    for (int i = 0; i <= n - 2; i++)
+    {   
+        //print_student(my_sts[i], x);
+
+        fprintf(file,"%d -  %d %s %s %s %s %d %s\n", i, my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
         
 
     }
@@ -242,67 +350,48 @@ void sort_tang(dssv* my_sts, int n, const char path[])
     fclose(file);
 }
 
-void sort_giam(dssv* my_sts, int n, const char path[])
-{
-    FILE* file = fopen(path, "w");
-    dssv temp;
-
-    for(int i = 0; i <= n - 3; i++)
-    {
-        for(int j = i + 1; j <= n -2; j++)
-        {
-            int cmp = strcmp(my_sts[i].firstName, my_sts[j].firstName);
-            if(cmp == 0)
-            {
-                if(strcmp(my_sts[i].dateOfBirth, my_sts[j].dateOfBirth) < 0)
-                {
-                    temp = my_sts[i];
-                    my_sts[i] = my_sts[j];
-                    my_sts[j] = temp;
-                }
-            } else if (cmp < 0)
-                {
-                    temp = my_sts[i];
-                    my_sts[i] = my_sts[j];
-                    my_sts[j] = temp;
-                }
-            
-        }
-
-    }
-
-    for (int i = 0; i <= n - 2; i++)
-    {   
-        //print_student(my_sts[i], x);
-
-        fprintf(file,"%d %s %s %s %s %d %s\n",my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
-    }
-
-    fclose(file);
-}
 
 int main()
 {   
     
+    
     int n = demSodong("dssv.csv");
     dssv* list_student = read_file("dssv.csv", n);
-    date* list_date = bring_date(list_student, n);
+    dssv* copy_list = read_file("dssv.csv", n);
+    
+    date* list_date = bring_date(copy_list, n);  
 
     //printf("%d", n);
     //print_sts_list(list_student, n, 5203001, "result.csv");
+    printf("%d\n\n", n);
+    //date temp;
 
-    
+    /*
+    for(int i = 0; i <= n - 3; i++)
+    {
+        for(int j = i + 1; j <= n - 2; j++)
+        {
+            if(list_date[i].year  > list_date[j].year)
+            {   
+                
+                temp = list_date[i];
+                list_date[i] = list_date[j];
+                list_date[j] = temp;
+            }
+        }
+    } 
 
-    for(int i = 0; i <= n -2; i++)
-    {   
-        printf("%d-\t%d %d %d\n", i,list_date[i].day, list_date[i].month, list_date[i].year);
+    for (int i = 0; i <= n - 2; i++)
+    {
+        printf("%d %d %d\n", list_date[i].day, list_date[i].month, list_date[i].year);
     }
+    */
 
     //count_male(list_student, n,  "result.csv");
 
     //count_Female(list_student, n,  "result.csv");
 
-    //sort_tang(list_student, n,  "result.csv");
-    //sort_giam(list_student, n,  "result.csv");
+    //sort_tang(list_student, n,  "result.csv", list_date);
+    sort_giam(list_student, n,  "result.csv", list_date);
     return 0;
 }
