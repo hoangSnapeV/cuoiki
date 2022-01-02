@@ -17,7 +17,7 @@ typedef struct
     char lastName[100];
     char gender[100];
     char dateOfBirth[100];
-    char classname[100];
+    char classname[100];//
     char country[100];
 
 } dssv;
@@ -106,7 +106,7 @@ dssv* read_file(const char file_path[], int n)
             }
             if (index == 5)
             {
-                strcpy(student_list[i].classname, token);  
+                strcpy(student_list[i].classname, token);   
             }
             if (index == 6)
             {
@@ -154,6 +154,7 @@ date* bring_date(dssv* list_student, int n)
     }
     return date_sts;
 }
+////
 
 //y1
 void print_sts_list(dssv* my_sts, int n, char x[], const char path[])
@@ -166,7 +167,7 @@ void print_sts_list(dssv* my_sts, int n, char x[], const char path[])
 
         if(strcmp(my_sts[i].classname, x) == 0)
         {   
-            fprintf(file,"%d -  %d %s %s %s %s %s %s\n", index, my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
+            fprintf(file,"%d -  %d %s %s %s %s %s %s\n", index,my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
             index++;
         }
 
@@ -210,7 +211,7 @@ void count_Female(dssv* my_sts, int n, const char path[])
 }
 
 //y4 sort asc là tang dân
-void sort_asc(dssv* my_sts, int n, const char path[], date* listdate)
+void sort_tang(dssv* my_sts, int n, const char path[], date* listdate)
 {
     FILE* file = fopen(path, "w");
     dssv temp;
@@ -223,7 +224,7 @@ void sort_asc(dssv* my_sts, int n, const char path[], date* listdate)
             //printf("%d %d", listdate[i].year,  listdate[j].year);
             if(cmp == 0)
             {   
-                if(listdate[i].year  > listdate[j].year)
+                if(listdate[i].year  < listdate[j].year)
                 {   
                     //doi ben dan sach
                     temp = my_sts[i];
@@ -279,7 +280,7 @@ void sort_asc(dssv* my_sts, int n, const char path[], date* listdate)
     {   
         //print_student(my_sts[i], x);
 
-        fprintf(file,"%d -  %d %s %s %s %s %s %s\n", i+1, my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
+        fprintf(file,"%d -  %d %s %s %s %s %s %s\n", i, my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
         
 
     }
@@ -287,7 +288,7 @@ void sort_asc(dssv* my_sts, int n, const char path[], date* listdate)
     fclose(file);
 }
 //giam sort desc
-void sort_desc(dssv* my_sts, int n, const char path[], date* listdate)
+void sort_giam(dssv* my_sts, int n, const char path[], date* listdate)
 {
     FILE* file = fopen(path, "w");
     dssv temp;
@@ -300,7 +301,7 @@ void sort_desc(dssv* my_sts, int n, const char path[], date* listdate)
             //printf("%d %d", listdate[i].year,  listdate[j].year);
             if(cmp == 0)
             {   
-                if(listdate[i].year  < listdate[j].year)
+                if(listdate[i].year  > listdate[j].year)
                 {   
                     //doi ben dan sach
                     temp = my_sts[i];
@@ -355,13 +356,14 @@ void sort_desc(dssv* my_sts, int n, const char path[], date* listdate)
     {   
         //print_student(my_sts[i], x);
 
-        fprintf(file,"%d -  %d %s %s %s %s %s %s\n", i + 1, my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
+        fprintf(file,"%d -  %d %s %s %s %s %s %s\n", i, my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
         
 
     }
 
     fclose(file);
 }
+
 
 //y5 
 void print_country(dssv* my_sts, int n, char x[], const char path[])
@@ -382,9 +384,9 @@ void print_country(dssv* my_sts, int n, char x[], const char path[])
     fclose(file);
     
 }
-
-////////
 /// y3
+
+
 diem* read_file_diem(const char file_path[], int n)
 {
     FILE* file = fopen(file_path, "r");
@@ -505,7 +507,7 @@ void print_top(list_avg* list_grade_avg, int n, const char path[], dssv* list_st
     }
     if(x > (n - 1))
     {
-        x = n - 1;
+        x = n - 2;
     }
     for (int i = 0; i <= x - 1; i++)
     {   
@@ -527,18 +529,17 @@ int main()
 {   
     
     int n = demSodong("dssv.csv");
-
+    printf("%d", n); // N = 202
+    
     dssv* list_student = read_file("dssv.csv", n);
     dssv* copy_list = read_file("dssv.csv", n);
 
-    date* list_date = bring_date(copy_list, n);  
+    date* list_date = bring_date(copy_list, n); 
 
     diem* list_diem_sts = read_file_diem("diem.csv", n);
 
-    list_avg* list_grade_avg = grade_average(list_diem_sts, n);
+    list_avg* list_grade_avg = grade_average(list_diem_sts, n); 
     
-    //printf("%d", n);
-
     ///
     /*
     char caulenh[100];
@@ -571,21 +572,23 @@ int main()
     */
 
 
+    //////----------
+
     //print_sts_list(list_student, n, "5203002", "result.csv");
 
     //count_male(list_student, n,  "result.csv");
 
     //count_Female(list_student, n,  "result.csv");
 
-    //sort_asc(list_student, n,  "result.csv", list_date);
-    sort_desc(list_student, n,  "result.csv", list_date);
+    //sort_tang(list_student, n,  "result.csv", list_date);
+    //sort_giam(list_student, n,  "result.csv", list_date);
 
-    //print_country(list_student, n, "China", "result.csv");
+    //print_country(list_student, n, "Chile", "result.csv");
 
     //y3
     
 
-    //print_top(list_grade_avg, n, "result.csv", list_student, 123456);
+    //print_top(list_grade_avg, n, "result.csv", list_student, 200);
 
     return 0;
 }

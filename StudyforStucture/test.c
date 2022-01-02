@@ -1,13 +1,15 @@
 #include <stdio.h>
-#include <string.h>
+#include <string.h>d
 
 int main () {
-   const char src[50] = "http://www.tutorialspoint.com";
-   char dest[50];
-   strcpy(dest,"Heloooo!!");
-   printf("Before memcpy dest = %s\n", dest);
-   memcpy(dest, src, strlen(src) + 1);
-   printf("After memcpy dest = %s\n", dest);
+   int x = 8;
+   int y = 7;
+   x = x + 1;
+
+   x = x + --y; // == 16 -> y = 6 + x 
+
+
+   printf("x = %d\t y = %d", x, y);
    
    return(0);
 }
