@@ -44,6 +44,8 @@ int demSoDong(const char file_path[])
 {
     FILE* file = fopen(file_path, "r");
 
+    if(file == NULL) return 0;
+
     int count = 0;
     char line[1000];
     while (!feof(file))
@@ -60,6 +62,8 @@ int demSoDong(const char file_path[])
 int count_dssm(const char file_path[])
 {
     FILE* file = fopen(file_path, "r");
+
+    if(file == NULL) return 0;
 
     int count = 0;
     char line[1000];
@@ -78,6 +82,7 @@ int count_dssm(const char file_path[])
 dssv* read_file(const char file_path[], int n)
 {
     FILE* file = fopen(file_path, "r");
+    if(file == NULL) return 0;
 
     dssv* student_list = calloc(n - 1, sizeof(dssv));
 
@@ -208,6 +213,7 @@ void print_sts_list(dssv* my_sts, int n, char x[], const char path[])
         } 
 
     }
+
     if (index == 0)
     {
         create_emptyFile("result.csv");            
@@ -321,7 +327,6 @@ void sort_asc(dssv* my_sts, int n, const char path[], date* listdate)
         //print_student(my_sts[i], x);
 
         fprintf(file,"%d %s %s %s %s %s %s\n", my_sts[i].studentID, my_sts[i].firstName, my_sts[i].lastName, my_sts[i].gender, my_sts[i].dateOfBirth, my_sts[i].classname, my_sts[i].country);
-        
 
     }
 
@@ -428,6 +433,9 @@ void print_country(dssv* my_sts, int n, char x[], const char path[])
 diem* read_file_diem(const char file_path[], int n, int a)
 {
     FILE* file = fopen(file_path, "r");
+
+    if(file == NULL) return 0;
+
     diem * diemlist = calloc((n - 1) * a, sizeof(diem));
 
     char line[200];
@@ -664,25 +672,47 @@ void print_txt( const char file_log[], int n, int s, const char file_lenh[], cha
     fclose(file_2);
 }
 
+int check_read_file(const char file_path[])
+{
+    FILE* file = fopen(file_path, "r");
+
+    if(file == NULL) return 0;
+
+    fclose(file);
+    return 1;
+}
+
 int main()
 {   
     
     int n = demSoDong("dssv.csv");
     int s = count_dssm("dsmh.csv");
+    int d = check_read_file("diem.csv");
 
-    dssv* list_student = read_file("dssv.csv", n);
-    dssv* copy_list = read_file("dssv.csv", n);
-
-    date* list_date = bring_date(copy_list, n);  
-
-    diem* list_diem_sts = read_file_diem("diem.csv", n, s);
-
-    list_avg* list_grade_avg = grade_average(list_diem_sts, n);
-
-    ///
+    dssv* list_student;
+    dssv* copy_list;
+    date* list_date;
+    diem* list_diem_sts;
+    list_avg* list_grade_avg;
     
+    if(n != 0)
+    {
+        list_student = read_file("dssv.csv", n);
+        copy_list = read_file("dssv.csv", n);
+        list_date = bring_date(copy_list, n);
+    }
+    
+
+    if(d != 0)
+    {
+        list_diem_sts = read_file_diem("diem.csv", n, s);
+
+        list_grade_avg = grade_average(list_diem_sts, n);
+    }
+    
+    ///
+   
     char caulenh[100];
-    printf("nhap lenh: ");
     fgets(caulenh, 100, stdin);
     caulenh[strlen(caulenh) - 1] = '\0';
     
@@ -796,8 +826,6 @@ int main()
         {
             create_error("error.txt");
         }
-
-    printf("%s %s\n", nhap_lenh.lenh, nhap_lenh.chu );
 
     return 0;
 }
