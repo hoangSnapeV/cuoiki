@@ -60,20 +60,22 @@ void updat_employee(struct Employee* e)
 //---------
 int main()
 {
-    struct Employee a ={12, "Hoang Vu", true, 999, 7.5}; // int x =3;
-    struct Employee b;
+    // struct Employee a ={12, "Hoang Vu", true, 999, 7.5}; // int x =3;
+    // struct Employee b = a;
 
-    b.id = 13;
+    //b.id = 13;
     //b.name = "Van Manh"; cach ghi sai
-    strcpy(b.name, "Hai Yen");
-    b.gender = false;
-    b.salary = 1200;
-    b.rating = 6.6;
+    // strcpy(b.name, "Hai Yen");
+    // b.gender = false;
+    // b.salary = 1200;
+    // b.rating = 6.6;
     
-    //printf("id of a: %d\n", a.id);
-    print_employee(a);
-    updat_employee(&a);
-    print_employee(a);
-
+    // //printf("id of a: %d\n", a.id);
+    // print_employee(a);
+    // updat_employee(&a);
+    // print_employee(a);
+    // char a[] = "He";
+    // char b[] = {'h', 'e', '\0'};
+    // printf("%d %d", strlen(a), strlen(b));
     return 0;
 }

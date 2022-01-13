@@ -1,0 +1,2 @@
+ top 10
+(câu lệnh sai do dư khoảng trống ở vị trí đầu tiên)

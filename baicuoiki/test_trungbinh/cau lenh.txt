@@ -1,0 +1,2 @@
+top 6
+tui test cái điểm trung bình á
