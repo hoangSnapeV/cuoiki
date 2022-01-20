@@ -255,10 +255,10 @@ void print_sts_list(dssv* my_sts, int n, char x[], const char path[])
 
     }
 
-    if (count == 0)
-    {
-        create_emptyFile("result.csv");            
-    }
+    // if (count == 0)
+    // {
+    //     create_emptyFile("result.csv");            
+    // }
     
     fclose(file);
     
@@ -856,6 +856,7 @@ void print_txt( const char file_log[], int n, int s, int d)
     fclose(file_1);
     
 }
+
 void in_caulenh(const char file_lenh[], char x[])
 {
     FILE* file_2 = fopen(file_lenh, "w");
@@ -870,7 +871,7 @@ int main()
     int n = demSoDong("dssv.csv");
     int s = count_dssm("dsmh.csv");
     int d = count_diem("diem.csv");
-   // printf("%d %d %d", n, s, d);
+   
     print_txt("log.txt", n, s, d);
 
     dssv* list_student;
@@ -899,6 +900,13 @@ int main()
     char caulenh[100];
     fgets(caulenh, 100, stdin);
     caulenh[strlen(caulenh) - 1] = '\0';
+
+    int v = 0;
+    
+    if(caulenh[strlen(caulenh) - 1] == 32)
+    {
+        v++;
+    }
     
     
     in_caulenh("cau lenh.txt", caulenh);
@@ -906,7 +914,7 @@ int main()
     int result = check_chuoi(caulenh);
     call nhap_lenh;
 
-    if (result)
+    if (result && v == 0)
     {       
         char* token = strtok(caulenh, " ");
         int index = 0;
@@ -936,7 +944,8 @@ int main()
         {            
             //print_sts_class
             if(strcmp(nhap_lenh.lenh, "list") == 0)
-            {
+            {   
+                //printf("%s", strcmp(nhap_lenh.chu, NULL) == 0);
                 print_sts_list(list_student, n, nhap_lenh.chu, "result.csv");
             }
 
