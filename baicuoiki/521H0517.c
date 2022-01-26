@@ -4,15 +4,13 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-typedef struct
-{
+typedef struct {
     int day;
     int month;
     int year;
 } date;
 
-typedef struct 
-{
+typedef struct {
     int studentID;
     char firstName[100];
     char lastName[100];
@@ -80,7 +78,6 @@ int count_dssm(const char file_path[])
     fclose(file);
     return count;
 }
-
 
 int count_diem(const char file_path[])
 {
